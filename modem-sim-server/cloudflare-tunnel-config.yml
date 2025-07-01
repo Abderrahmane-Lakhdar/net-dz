@@ -1,0 +1,25 @@
+tunnel: 2d029445-340a-40ea-80b0-035f4f8b2e2f
+credentials-file: C:\Users\Administrateur\.cloudflared\2d029445-340a-40ea-80b0-035f4f8b2e2f.json
+
+ingress:
+  # Route WebSocket traffic to your modem-sim-server
+  - hostname: modem-sim-server.creditpro-dz.com
+    service: ws://localhost:3001
+    originRequest:
+      noTLSVerify: true
+      connectTimeout: 30s
+      tlsTimeout: 10s
+      tcpKeepAlive: 30s
+      keepAliveConnections: 10
+      keepAliveTimeout: 90s
+      httpHostHeader: localhost:3001
+
+  # Catch-all rule (required)
+  - service: http_status:404
+
+# Optional: Configure logging
+loglevel: debug
+logfile: ./cloudflared.log
+
+# Optional: Metrics
+metrics: localhost:8080
